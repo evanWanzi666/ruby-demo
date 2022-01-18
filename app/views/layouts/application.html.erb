@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title>ruby—demo</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 user-scalable=no"/>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
-  </body>
+    <header name="top" style="height:100px">
+      <nav class="navbar navbar-default navbar-fixed-top nav-color" role="navigation" id ="nav">
+        <div class="container">
+          <div class="nav-header nav-color">
+            <button id="nav_collapse"  type="button" class="navbar-toggle toggle-btn" data-toggle="collapse" data-target="#bs-navbar-collapse-1"
+            aria-controls="bs-navbar-collapse-1">
+              <span class="fa fa-bars fa-lg"</span>
+            </button>
+            <a class="navbar-brand custom-logo-link" herf="/">
+              ruby-demo
+            </a>
+          </div>
+
+        <div class="collapse navbar-collapse navbar-submenu-color collapse" role="navigation" id ="bs-navbar-collapse-1">
+          <ul class="nav navvar-nav navbar-right custom">
+
+            <% if session[:user_id] %>
+              <li>
+                <%= link_to "#{@user.username}, 退出", session_path(@user), method: 'delete' -%>
+              </li>
+            <% else %>
+              <li>
+               <%= link_to "登录", new_session_path, method: 'get' -%>
+              </li>
+            <% end -%>
+          </ul>
+        </div>  
+      </nav>  
+    </header>
+
+    <div class="container body-offset">
+      <% if flash[:notice]%>
+       <div class="alert alert-info"><%= flash[:notice]%></div>
+      <% end -%>
+
+      <%=yield %>
+    </div>
 </html>
